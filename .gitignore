@@ -24,3 +24,6 @@ go.work
 # IDE
 .vscode/
 .idea/
+
+# Application Configuration
+/config.yml
