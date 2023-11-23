@@ -1,14 +1,15 @@
 package routes
 
-import {
-	controller "gastrono-go/controllers"
+import (
+	"gastrono-go/controllers"
+
 	"github.com/gin-gonic/gin"
-}
+)
 
 func OrderItemRoutes(incomingRoutes *gin.Engine) {
-	incomingRoutes.GET("/orderItems", controller.GetOrderItems())
-	incomingRoutes.GET("/orderItems/:orderItem_id", controller.GetOrderItem())
-	incomingRoutes.GET("/orderItems-order/:order_id", controller.GetOrderItemsByOrder());
-	incomingRoutes.POST("/orderItems", controller.CreateOrderItem())
-	incomingRoutes.PATCH("/orderItems/:orderItem_id", controller.UpdateOrderItem())
+	incomingRoutes.GET("/orderItems", controllers.GetOrderItems())
+	incomingRoutes.GET("/orderItems/:orderItem_id", controllers.GetOrderItem())
+	incomingRoutes.GET("/orderItems-order/:order_id", controllers.GetOrderItemsByOrder())
+	incomingRoutes.POST("/orderItems", controllers.CreateOrderItem())
+	incomingRoutes.PATCH("/orderItems/:orderItem_id", controllers.UpdateOrderItem())
 }
