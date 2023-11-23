@@ -17,3 +17,11 @@ func SignUp() gin.HandlerFunc {
 func Login() gin.HandlerFunc {
 	return func(c *gin.Context) {}
 }
+
+func HashPassword(password string) string {
+	return ""
+}
+
+func VerifyPassword(hashedPassword, password string) bool {
+	return false
+}
