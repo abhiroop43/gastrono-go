@@ -1,7 +1,7 @@
 package routes
 
 import (
-	 "gastrono-go/controllers"
+	"gastrono-go/controllers"
 
 	"github.com/gin-gonic/gin"
 )
