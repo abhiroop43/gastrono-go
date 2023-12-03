@@ -12,11 +12,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var menuCollection *mongo.Collection = database.OpenCollection(database.Client, "menu")
+var menuCollection = database.OpenCollection(database.Client, "menu")
 
 func GetMenus() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -91,7 +90,7 @@ func CreateMenu() gin.HandlerFunc {
 }
 
 func inTimeSpan(start, end, check time.Time) bool {
-	return start.After(time.Now()) && end.After(start)
+	return start.After(check) && end.After(start)
 }
 
 func UpdateMenu() gin.HandlerFunc {
@@ -118,19 +117,19 @@ func UpdateMenu() gin.HandlerFunc {
 				return
 			}
 
-			updateObj = append(updateObj, bson.E{"start_date", menu.Start_Date})
-			updateObj = append(updateObj, bson.E{"end_date", menu.End_Date})
+			updateObj = append(updateObj, bson.E{Key: "start_date", Value: menu.Start_Date})
+			updateObj = append(updateObj, bson.E{Key: "end_date", Value: menu.End_Date})
 
 			if menu.Name != "" {
-				updateObj = append(updateObj, bson.E{"name", menu.Name})
+				updateObj = append(updateObj, bson.E{Key: "name", Value: menu.Name})
 			}
 
 			if menu.Category != "" {
-				updateObj = append(updateObj, bson.E{"category", menu.Category})
+				updateObj = append(updateObj, bson.E{Key: "category", Value: menu.Category})
 			}
 
 			menu.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-			updateObj = append(updateObj, bson.E{"updated_at", menu.Updated_at})
+			updateObj = append(updateObj, bson.E{Key: "updated_at", Value: menu.Updated_at})
 
 			upsert := true
 
