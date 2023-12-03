@@ -4,30 +4,48 @@ import (
 	"context"
 	"fmt"
 	"gastrono-go/models"
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func GetMenus() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		result, err := menuCollection.Find(context.TODO(), bson.M{})
+		defer cancel()
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+		var allMenus []bson.M
+
+		if err = result.All(ctx, &allMenus); err != nil {
+			log.Fatal(err)
+		}
+
+		c.JSON(http.StatusOK, allMenus)
 	}
 }
 
 func GetMenu() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		menuId := c.Param("menu_id")
 		var menu models.Menu
-		var food models.Food
 
-		if err := c.BindJSON(&food); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
+		err := menuCollection.FindOne(ctx, bson.M{"menu_id": menuId}).Decode(&menu)
+		defer cancel()
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		}
 
-		c.JSON(http.StatusAccepted, nil)
+		c.JSON(http.StatusOK, menu)
 	}
 }
 
