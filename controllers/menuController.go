@@ -137,7 +137,7 @@ func UpdateMenu() gin.HandlerFunc {
 				Upsert: &upsert,
 			}
 
-			result, err := menuCollection.UpdateOne(ctx, filter, bson.D{{"$set", updateObj}}, &opt)
+			result, err := menuCollection.UpdateOne(ctx, filter, bson.D{{Key: "$set", Value: updateObj}}, &opt)
 			if err != nil {
 				msg := "Menu update failed"
 				c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
