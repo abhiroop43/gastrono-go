@@ -65,22 +65,22 @@ func CreateOrder() gin.HandlerFunc {
 			return
 		}
 
-		if order.Table_id != nil {
-			err := tableCollection.FindOne(ctx, bson.M{"table_id": order.Table_id}).Decode(&table)
+		if order.TableId != nil {
+			err := tableCollection.FindOne(ctx, bson.M{"table_id": order.TableId}).Decode(&table)
 			defer cancel()
 
 			if err != nil {
-				msg := fmt.Sprintf("Table with id %s not found", *order.Table_id)
+				msg := fmt.Sprintf("Table with id %s not found", *order.TableId)
 				c.JSON(http.StatusBadRequest, gin.H{"error": msg})
 				return
 			}
 		}
 
-		order.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		order.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		order.CreatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		order.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 
 		order.ID = primitive.NewObjectID()
-		order.Order_id = order.ID.Hex()
+		order.OrderId = order.ID.Hex()
 
 		result, insertErr := orderCollection.InsertOne(ctx, order)
 		defer cancel()
@@ -111,19 +111,19 @@ func UpdateOrder() gin.HandlerFunc {
 			return
 		}
 
-		if order.Table_id != nil {
-			err := menuCollection.FindOne(ctx, bson.M{"table_id": order.Table_id}).Decode(&table)
+		if order.TableId != nil {
+			err := menuCollection.FindOne(ctx, bson.M{"table_id": order.TableId}).Decode(&table)
 			defer cancel()
 			if err != nil {
-				msg := fmt.Sprintf("Table with id %s not found", *order.Table_id)
+				msg := fmt.Sprintf("Table with id %s not found", *order.TableId)
 				c.JSON(http.StatusBadRequest, gin.H{"error": msg})
 				return
 			}
-			updateObj = append(updateObj, bson.E{Key: "table_id", Value: order.Table_id})
+			updateObj = append(updateObj, bson.E{Key: "table_id", Value: order.TableId})
 		}
 
-		order.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		updateObj = append(updateObj, bson.E{Key: "updated_at", Value: order.Updated_at})
+		order.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		updateObj = append(updateObj, bson.E{Key: "updated_at", Value: order.UpdatedAt})
 
 		upsert := true
 
@@ -149,10 +149,10 @@ func UpdateOrder() gin.HandlerFunc {
 func OrderItemOrderCreator(order models.Order) string {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
-	order.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-	order.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+	order.CreatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+	order.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	order.ID = primitive.NewObjectID()
-	order.Order_id = order.ID.Hex()
+	order.OrderId = order.ID.Hex()
 
 	_, err := orderCollection.InsertOne(ctx, order)
 	if err != nil {
@@ -161,5 +161,5 @@ func OrderItemOrderCreator(order models.Order) string {
 	}
 	defer cancel()
 
-	return order.Order_id
+	return order.OrderId
 }
