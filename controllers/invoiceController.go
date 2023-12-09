@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"context"
 	"gastrono-go/database"
 	"github.com/gin-gonic/gin"
 	"time"
@@ -22,7 +21,7 @@ var invoiceCollection = database.OpenCollection(database.Client, "invoice")
 
 func GetInvoices() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		//ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 	}
 }
 
