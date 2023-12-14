@@ -7,12 +7,12 @@ import (
 )
 
 type OrderItem struct {
-	ID         primitive.ObjectID `bson:"_id"`
-	Name       *string            `json:"name" validate:"required,min=2,max=100"`
-	Price      *float64           `json:"price" validate:"required"`
-	Food_image *string            `json:"food_image" validate:"required"`
-	Created_at time.Time          `json:"created_at"`
-	Updated_at time.Time          `json:"updated_at"`
-	Food_id    string             `json:"food_id"`
-	Menu_id    *string            `json:"menu_id" validate:"required"`
+	ID          primitive.ObjectID `bson:"_id"`
+	Quantity    *string            `json:"quantity" validate:"required,eq=S|eq=M|eq=L"`
+	UnitPrice   *float64           `json:"unit_price" validate:"required"`
+	CreatedAt   time.Time          `json:"created_at"`
+	UpdatedAt   time.Time          `json:"updated_at"`
+	FoodId      *string            `json:"food_id" validate:"required"`
+	OrderItemId string             `json:"order_item_id"`
+	OrderId     string             `json:"order_id" validate:"required"`
 }

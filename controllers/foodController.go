@@ -118,7 +118,7 @@ func CreateFood() gin.HandlerFunc {
 			return
 		}
 
-		err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.Menu_id}).Decode(&menu)
+		err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.MenuId}).Decode(&menu)
 		defer cancel()
 
 		if err != nil {
@@ -127,10 +127,10 @@ func CreateFood() gin.HandlerFunc {
 			return
 		}
 
-		food.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		food.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		food.CreatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		food.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		food.ID = primitive.NewObjectID()
-		food.Food_id = food.ID.Hex()
+		food.FoodId = food.ID.Hex()
 		num := toFixed(*food.Price, 2)
 		food.Price = &num
 
@@ -170,12 +170,12 @@ func UpdateFood() gin.HandlerFunc {
 			updateObj = append(updateObj, bson.E{Key: "price", Value: food.Price})
 		}
 
-		if food.Food_image != nil {
-			updateObj = append(updateObj, bson.E{Key: "food_image", Value: food.Food_image})
+		if food.FoodImage != nil {
+			updateObj = append(updateObj, bson.E{Key: "food_image", Value: food.FoodImage})
 		}
 
-		if food.Menu_id != nil {
-			err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.Menu_id}).Decode(&menu)
+		if food.MenuId != nil {
+			err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.MenuId}).Decode(&menu)
 			defer cancel()
 
 			if err != nil {
@@ -187,9 +187,9 @@ func UpdateFood() gin.HandlerFunc {
 			updateObj = append(updateObj, bson.E{Key: "menu", Value: food.Price})
 		}
 
-		food.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		food.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 
-		updateObj = append(updateObj, bson.E{Key: "updated_at", Value: food.Updated_at})
+		updateObj = append(updateObj, bson.E{Key: "updated_at", Value: food.UpdatedAt})
 
 		filter := bson.M{"food_id": foodId}
 		upsert := true

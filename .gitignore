@@ -27,3 +27,6 @@ go.work
 
 # Application Configuration
 /config.yml
+
+# environment variables
+.env
