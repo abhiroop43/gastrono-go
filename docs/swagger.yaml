@@ -53,22 +53,10 @@ paths:
             items:
               $ref: '#/definitions/models.Menu'
             type: array
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "404":
-          description: Not Found
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
       summary: Get All Menus
       tags:
       - menu
-  /menus/{menu_id}:
+  /menus/{menuId}:
     get:
       consumes:
       - application/json
@@ -76,7 +64,7 @@ paths:
       parameters:
       - description: Menu ID
         in: path
-        name: menu_id
+        name: menuId
         required: true
         type: string
       produces:

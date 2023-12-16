@@ -46,29 +46,11 @@ const docTemplate = `{
                                 "$ref": "#/definitions/models.Menu"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 }
             }
         },
-        "/menus/{menu_id}": {
+        "/menus/{menuId}": {
             "get": {
                 "description": "Get All Menus",
                 "consumes": [
@@ -85,7 +67,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Menu ID",
-                        "name": "menu_id",
+                        "name": "menuId",
                         "in": "path",
                         "required": true
                     }

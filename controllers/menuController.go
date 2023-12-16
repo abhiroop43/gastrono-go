@@ -24,7 +24,7 @@ var menuCollection = database.OpenCollection(database.Client, "menu")
 //	@Tags			menu
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{array}		models.Menu
+//	@Success		200	{array}	models.Menu
 //	@Router			/menus [get]
 func GetMenus() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -52,16 +52,16 @@ func GetMenus() gin.HandlerFunc {
 //	@Tags			menu
 //	@Accept			json
 //	@Produce		json
-//	@param			menu_id	path	string	true	"Menu ID"
+//	@param			menuId	path	string	true	"Menu ID"
 //	@Success		200		{array}	models.Menu
-//	@Router			/menus/{menu_id} [get]
+//	@Router			/menus/{menuId} [get]
 func GetMenu() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
-		menuId := c.Param("menu_id")
+		menuId := c.Param("menuId")
 		var menu models.Menu
 
-		err := menuCollection.FindOne(ctx, bson.M{"menu_id": menuId}).Decode(&menu)
+		err := menuCollection.FindOne(ctx, bson.M{"menuId": menuId}).Decode(&menu)
 		defer cancel()
 
 		if err != nil {
@@ -123,8 +123,8 @@ func UpdateMenu() gin.HandlerFunc {
 			return
 		}
 
-		menuId := c.Param("menu_id")
-		filter := bson.M{"menu_id": menuId}
+		menuId := c.Param("menuId")
+		filter := bson.M{"menuId": menuId}
 
 		var updateObj primitive.D
 

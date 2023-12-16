@@ -118,7 +118,7 @@ func CreateFood() gin.HandlerFunc {
 			return
 		}
 
-		err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.MenuId}).Decode(&menu)
+		err := menuCollection.FindOne(ctx, bson.M{"menuId": food.MenuId}).Decode(&menu)
 		defer cancel()
 
 		if err != nil {
@@ -175,7 +175,7 @@ func UpdateFood() gin.HandlerFunc {
 		}
 
 		if food.MenuId != nil {
-			err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.MenuId}).Decode(&menu)
+			err := menuCollection.FindOne(ctx, bson.M{"menuId": food.MenuId}).Decode(&menu)
 			defer cancel()
 
 			if err != nil {
