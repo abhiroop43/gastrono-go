@@ -32,3 +32,6 @@ go.work
 .env
 
 /gastrono-go
+
+# temp files
+tmp/
