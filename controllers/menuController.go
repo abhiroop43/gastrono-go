@@ -17,6 +17,14 @@ import (
 
 var menuCollection = database.OpenCollection(database.Client, "menu")
 
+// GetMenus godoc
+// @Summary      Get All Menus
+// @Description  Get All Menus
+// @Tags         menu
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}  models.Menu
+// @Router       /getmenus [get]
 func GetMenus() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)

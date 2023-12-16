@@ -1,12 +1,34 @@
 package main
 
 import (
+	_ "gastrono-go/docs"
 	"gastrono-go/middleware"
 	"gastrono-go/routes"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"os"
 )
 
+// @title           Gastrono Go Backend API
+// @version         1.0
+// @description     This is the Backend API for Gastrono Go.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   Abhiroop Santra
+// @contact.url    https://www.abhiroopsantra.dev/
+// @contact.email  abhiroop.santra@gmail.com
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /api/v1
+
+// @securityDefinitions.basic  BasicAuth
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 	port := os.Getenv("PORT")
 
@@ -16,6 +38,8 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	routes.UserRoutes(router)
 	router.Use(middleware.AuthenticationMiddleware())
 
