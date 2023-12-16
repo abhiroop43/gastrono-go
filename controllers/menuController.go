@@ -18,13 +18,14 @@ import (
 var menuCollection = database.OpenCollection(database.Client, "menu")
 
 // GetMenus godoc
-// @Summary      Get All Menus
-// @Description  Get All Menus
-// @Tags         menu
-// @Accept       json
-// @Produce      json
-// @Success      200  {array}  models.Menu
-// @Router       /getmenus [get]
+//
+//	@Summary		Get All Menus
+//	@Description	Get All Menus
+//	@Tags			menu
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{array}		models.Menu
+//	@Router			/menus [get]
 func GetMenus() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
@@ -44,6 +45,16 @@ func GetMenus() gin.HandlerFunc {
 	}
 }
 
+// GetMenu godoc
+//
+//	@Summary		Get All Menus
+//	@Description	Get All Menus
+//	@Tags			menu
+//	@Accept			json
+//	@Produce		json
+//	@param			menu_id	path	string	true	"Menu ID"
+//	@Success		200		{array}	models.Menu
+//	@Router			/menus/{menu_id} [get]
 func GetMenu() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)

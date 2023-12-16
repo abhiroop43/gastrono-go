@@ -10,25 +10,27 @@ import (
 	"os"
 )
 
-// @title           Gastrono Go Backend API
-// @version         1.0
-// @description     This is the Backend API for Gastrono Go.
-// @termsOfService  http://swagger.io/terms/
+//	@title			Gastrono Go Backend API
+//	@version		1.0
+//	@description	This is the Backend API for Gastrono Go.
+//	@termsOfService	http://swagger.io/terms/
 
-// @contact.name   Abhiroop Santra
-// @contact.url    https://www.abhiroopsantra.dev/
-// @contact.email  abhiroop.santra@gmail.com
+//	@contact.name	Abhiroop Santra
+//	@contact.url	https://www.abhiroopsantra.dev/
+//	@contact.email	abhiroop.santra@gmail.com
 
-// @license.name  Apache 2.0
-// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host      localhost:8080
-// @BasePath  /api/v1
+//	@host		localhost:8080
+//	@BasePath	/
 
-// @securityDefinitions.basic  BasicAuth
+//	@securityDefinitions.apiKey	ApiKeyAuth
+//	@in							header
+//	@name						Authorization
 
-// @externalDocs.description  OpenAPI
-// @externalDocs.url          https://swagger.io/resources/open-api/
+// @externalDocs.description	OpenAPI
+// @externalDocs.url			https://swagger.io/resources/open-api/
 func main() {
 	port := os.Getenv("PORT")
 
