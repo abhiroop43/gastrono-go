@@ -41,6 +41,8 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.ForwardedByClientIP = true
+	_ := router.SetTrustedProxies([]string{"0.0.0.0"})
 
 	routes.UserRoutes(router)
 	router.Use(middleware.AuthenticationMiddleware())
