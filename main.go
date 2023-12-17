@@ -7,7 +7,9 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"log"
 	"os"
+	"time"
 )
 
 //	@title			Gastrono Go Backend API
@@ -32,6 +34,19 @@ import (
 // @externalDocs.description	OpenAPI
 // @externalDocs.url			https://swagger.io/resources/open-api/
 func main() {
+	// log to custom file
+
+	LogFile := "./tmp/gastronogo-" + time.Now().Format(time.DateOnly) + ".log"
+	// open log file
+	logFile, err := os.OpenFile(LogFile, os.O_APPEND|os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer logFile.Close()
+
+	// Set log out put and enjoy :)
+	log.SetOutput(logFile)
+
 	port := os.Getenv("PORT")
 
 	if port == "" {
@@ -42,7 +57,7 @@ func main() {
 	router.Use(gin.Logger())
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.ForwardedByClientIP = true
-	_ := router.SetTrustedProxies([]string{"0.0.0.0"})
+	err = router.SetTrustedProxies([]string{"0.0.0.0"})
 
 	routes.UserRoutes(router)
 	router.Use(middleware.AuthenticationMiddleware())
@@ -54,7 +69,8 @@ func main() {
 	routes.OrderItemRoutes(router)
 	routes.InvoiceRoutes(router)
 
-	err := router.Run(":" + port)
+	log.Println("[INFO] Starting Gastrono-Go Backend API on port " + port)
+	err = router.Run(":" + port)
 	if err != nil {
 		return
 	}

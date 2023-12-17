@@ -16,7 +16,7 @@ func GetTables() gin.HandlerFunc {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 
 		result, err := tableCollection.Find(ctx, bson.M{})
-
+		defer cancel()
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return

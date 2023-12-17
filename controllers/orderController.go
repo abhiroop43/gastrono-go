@@ -15,7 +15,6 @@ import (
 )
 
 var orderCollection = database.OpenCollection(database.Client, "order")
-var tableCollection = database.OpenCollection(database.Client, "table")
 
 func GetOrder() gin.HandlerFunc {
 	return func(c *gin.Context) {
