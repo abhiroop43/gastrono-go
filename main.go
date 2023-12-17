@@ -57,7 +57,14 @@ func main() {
 	router.Use(gin.Logger())
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.ForwardedByClientIP = true
-	err = router.SetTrustedProxies([]string{"0.0.0.0"})
+	if os.Getenv("APP_ENV") == "development" {
+		// gin set release mode
+		gin.SetMode(gin.DebugMode)
+		err = router.SetTrustedProxies([]string{"127.0.0.1"})
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+		err = router.SetTrustedProxies([]string{"0.0.0.0"})
+	}
 
 	routes.UserRoutes(router)
 	router.Use(middleware.AuthenticationMiddleware())
